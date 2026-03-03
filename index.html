@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vishal Sharma | Full Stack Developer</title>
+    <meta name="description"
+        content="Portfolio of Vishal Sharma, a Full Stack Developer specializing in scalable, cloud-native solutions, JavaScript, React, and Node.js.">
+    <meta name="keywords"
+        content="Vishal Sharma, Full Stack Developer, Web Developer, React, Node.js, Cloud-native, Portfolio, Developer">
+    <meta name="author" content="Vishal Sharma">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://yourportfolio.com/">
+    <meta property="og:title" content="Vishal Sharma | Full Stack Developer">
+    <meta property="og:description"
+        content="Explore the portfolio of Vishal Sharma, featuring projects in Full Stack Development and Cloud Solutions.">
+    <meta property="og:image" content="assets/profile.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://yourportfolio.com/">
+    <meta property="twitter:title" content="Vishal Sharma | Full Stack Developer">
+    <meta property="twitter:description"
+        content="Explore the portfolio of Vishal Sharma, featuring projects in Full Stack Development and Cloud Solutions.">
+    <meta property="twitter:image" content="assets/profile.jpg">
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Scripts -->
+    <script src="script.js" defer></script>
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="logo">VS</div>
+
+        <ul class="nav-menu">
+            <li><a href="#home-section" class="active" data-target="home-section">Home</a></li>
+            <li><a href="#profile-section" data-target="profile-section">About</a></li>
+            <li><a href="#resume-section" data-target="resume-section">Experience</a></li>
+            <li><a href="#skills-section" data-target="skills-section">Skills</a></li>
+            <li><a href="#projects-section" data-target="projects-section">Projects</a></li>
+            <li><a href="#contact-section" data-target="contact-section">Contact</a></li>
+        </ul>
+
+        <div class="nav-extras" style="display: flex; align-items: center; gap: 15px;">
+            <div class="theme-toggle" id="theme-toggle" title="Toggle Light/Dark Mode" role="button"
+                aria-label="Toggle Dark Mode" tabindex="0">
+                <!-- Sun Icon (Default Hidden) -->
+                <svg class="icon sun-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                    stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                </svg>
+                <!-- Moon Icon -->
+                <svg class="icon moon-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                    stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                </svg>
+            </div>
+            <div class="hamburger" role="button" aria-label="Toggle Menu" tabindex="0">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <div id="home-section" class="home-container">
+        <div class="intro-container">
+            <h1 class="name">Vishal Sharma</h1>
+            <div class="profile">Full Stack Developer</div>
+            <p class="intro">
+                30 years young, husband and father, pet lover, coffee addict.<br>
+                Crafting scalable, cloud-native solutions with modern tech.
+            </p>
+            <a href="#profile-section" class="btn-glow">Explore My Work</a>
+        </div>
+    </div>
+
+    <!-- About Section -->
+    <div id="profile-section" class="section-container">
+        <div class="section-heading">
+            <h2>About Me</h2>
+            <p>Who I Am</p>
+        </div>
+        <div class="profile-content">
+            <div class="profile-text glass-card">
+                <h3>Hello, I'm Vishal!</h3>
+                <p>
+                    A 30-year-old Full Stack Developer based in Ghaziabad, Uttar Pradesh, India.
+                    I have a strong passion for creating scalable and efficient software solutions.
+                    Highly motivated and always eager to take on new challenges.
+                </p>
+                <br>
+                <p>
+                    With over 8 years of hands-on experience in developing scalable, cloud-native applications.
+                    Strong backend expertise using <strong>Node.js</strong> and <strong>Google Cloud Platform</strong>,
+                    including API development,
+                    serverless architecture, and real-time data processing. Currently deepening front-end capabilities
+                    with <strong>ReactJS</strong> to build fully integrated solutions.
+                </p>
+            </div>
+            <div class="profile-img-container">
+                <div class="img-box">
+                    <!-- Placeholder/Fallback image if asset is missing -->
+                    <img src="assets/Image-removebg-preview.png" alt="Vishal Sharma"
+                        onerror="this.src='https://via.placeholder.com/350x350/111/fff?text=VS'">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Resume / Experience Section -->
+    <div id="resume-section" class="section-container">
+        <div class="section-heading">
+            <h2>Experience & Education</h2>
+            <p>My Journey</p>
+        </div>
+
+        <div class="timeline">
+            <!-- Experience 1 -->
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content glass-card">
+                    <span class="date">2021 - Present</span>
+                    <h3>Senior Software Engineer II</h3>
+                    <h4>Accenture</h4>
+                    <p>Leading backend development and cloud architecture initiatives.</p>
+                </div>
+            </div>
+
+            <!-- Experience 2 -->
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content glass-card">
+                    <span class="date">2019 - 2021</span>
+                    <h3>Senior Software Engineer</h3>
+                    <h4>Affle India Ltd</h4>
+                    <p>Developed scalable mobile advertising platforms and data processing pipelines.</p>
+                </div>
+            </div>
+
+            <!-- Experience 3 -->
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content glass-card">
+                    <span class="date">2016 - 2019</span>
+                    <h3>Software Engineer</h3>
+                    <h4>Shineweb Solutions Pvt Ltd</h4>
+                    <p>Full stack web development and API integration.</p>
+                </div>
+            </div>
+
+            <!-- Education 1 -->
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content glass-card">
+                    <span class="date">2022 - 2024</span>
+                    <h3>Masters Degree</h3>
+                    <h4>Amity University Online</h4>
+                </div>
+            </div>
+
+            <!-- Education 2 -->
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content glass-card">
+                    <span class="date">2012 - 2015</span>
+                    <h3>Bachelors Degree</h3>
+                    <h4>CCS University</h4>
+                </div>
+            </div>
+        </div>
+
+        <div style="text-align: center; margin-top: 3rem;">
+            <div class="btn-glow" onclick="download()">Download Full Resume</div>
+        </div>
+    </div>
+
+    <!-- Skills Section -->
+    <div id="skills-section" class="section-container">
+        <div class="section-heading">
+            <h2>Skills & Expertise</h2>
+            <p>My Technical Arsenal</p>
+        </div>
+
+        <div class="skills-grid">
+            <div class="skill-card">
+                <h3>Backend & API</h3>
+                <p>Node.js, Express.js, Microservices, WebSocket, REST APIs</p>
+            </div>
+            <div class="skill-card">
+                <h3>Cloud (GCP)</h3>
+                <p>BigQuery, Dataflow, Pub/Sub, Cloud Functions, Cloud Run, GCS</p>
+            </div>
+            <div class="skill-card">
+                <h3>Frontend</h3>
+                <p>HTML5, CSS3, ReactJS, JavaScript (ES6+)</p>
+            </div>
+            <div class="skill-card">
+                <h3>Database</h3>
+                <p>MongoDB, SQL, NoSQL Data Modeling, Data Warehousing</p>
+            </div>
+            <div class="skill-card">
+                <h3>Data Engineering</h3>
+                <p>ETL/ELT Pipelines, Data Migration, Real-time Processing</p>
+            </div>
+            <div class="skill-card">
+                <h3>Tools</h3>
+                <p>Git, Docker, CI/CD, Jest, Mocha/Chai, OAuth/JWT</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Projects Section -->
+    <div id="projects-section" class="section-container" style="background: var(--bg-secondary);">
+        <div class="section-heading">
+            <h2>Latest Works</h2>
+            <p>What I've Built</p>
+        </div>
+
+        <div class="skills-grid"> <!-- Reusing grid for projects for now -->
+            <div class="glass-card">
+                <h3>E-Commerce Platform</h3>
+                <p style="margin-top: 10px; font-size: 0.9rem;">
+                    A scalable microservices-based e-commerce backend handling 10k+ concurrent users. Built with Node.js
+                    and GCP.
+                </p>
+            </div>
+            <div class="glass-card">
+                <h3>Real-time Analytics Dashboard</h3>
+                <p style="margin-top: 10px; font-size: 0.9rem;">
+                    Data visualization dashboard for ad-tech, processing TBs of data using BigQuery and React.
+                </p>
+            </div>
+            <div class="glass-card">
+                <h3>Cloud Migration Tool</h3>
+                <p style="margin-top: 10px; font-size: 0.9rem;">
+                    Automated utility for seamless database migration from on-prem to Cloud SQL / MongoDB Atlas.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Contact Section -->
+    <div id="contact-section" class="section-container">
+        <div class="section-heading">
+            <h2>Contact Me</h2>
+            <p>Let's Collaborate</p>
+        </div>
+
+        <div class="glass-card" style="max-width: 800px; margin: 0 auto; text-align: center;">
+            <p style="font-size: 1.5rem; color: white; margin-bottom: 2rem;">
+                Interested in working together or just want to say hi?
+            </p>
+
+            <div style="display: flex; flex-direction: column; gap: 1rem; align-items: center;">
+                <a href="mailto:vishalsharmapks@gmail.com" class="btn-glow" style="border-radius: 8px;">
+                    vishalsharmapks@gmail.com
+                </a>
+                <p>+91-9971103870</p>
+                <p style="color: var(--text-secondary);">Ghaziabad, UP, India</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="social-links">
+                <a href="#" target="_blank" aria-label="LinkedIn Profile">LinkedIn</a>
+                <a href="#" target="_blank" aria-label="GitHub Profile">GitHub</a>
+                <a href="#" target="_blank" aria-label="Twitter Profile">Twitter</a>
+            </div>
+            <p>&copy; 2026 Vishal Sharma. All Rights Reserved.</p>
+        </div>
+    </footer>
+    <!-- Chatbot Widget -->
+    <div id="chat-widget">
+        <button id="chat-toggle-btn" title="Chat with Resume Bot" aria-label="Open Chatbot">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+            </svg>
+        </button>
+
+        <div id="chat-window" class="hidden-chat" aria-hidden="true" role="dialog" aria-labelledby="chat-title-text">
+            <div class="chat-header">
+                <div class="chat-title">
+                    <span class="bot-avatar" aria-hidden="true">🤖</span>
+                    <span id="chat-title-text">Resume Bot</span>
+                    <span class="status-dot" title="Online" aria-label="Online Status"></span>
+                </div>
+                <button id="chat-close-btn" aria-label="Close Chatbot">&times;</button>
+            </div>
+            <div id="chat-messages" class="chat-messages">
+                <!-- Messages will appear here -->
+            </div>
+            <div class="chat-input-area">
+                <div id="quick-options" class="quick-options">
+                    <!-- Quick chips will be injected here -->
+                </div>
+                <div class="input-wrapper">
+                    <input type="text" id="chat-input" placeholder="Ask about skills, experience..." autocomplete="off"
+                        aria-label="Chat Message Input">
+                    <button id="chat-send-btn" aria-label="Send Message">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="22" y1="2" x2="11" y2="13"></line>
+                            <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+
+</html>
