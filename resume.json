@@ -1,9 +1,0 @@
-{
-    "summary": "I am a 30-year-old Full Stack Developer specializing in scalable, cloud-native solutions. I love coding, coffee, and my pets!",
-    "greeting": "Hello! It's great to meet you. I'm here to answer questions about my work and experience.",
-    "skills": "My tech stack includes JavaScript, React, Node.js, Python, SQL/NoSQL databases, and Cloud platforms (AWS/GCP).",
-    "experience": "I have over 8 years of experience building enterprise-level applications, optimizing backend systems, and leading dev teams.",
-    "projects": "I have worked on [Data Visualization Dashboards](#projects-section), Cloud Migration Tools, and High-Performance APIs. Check out the Projects section!",
-    "contact": "You can reach me at vishalsharmapks@gmail.com. You can also use the form in the [Contact Section](#contact-section).",
-    "default": "I am not sure about that, but you can ask me about my Skills, Experience, Projects, or Contact info!"
-}
