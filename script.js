@@ -264,6 +264,8 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // --- Contact Form Validation & Mock Submit ---
+    // form removed in previous commit
+    /* 
     const contactForm = document.getElementById('contact-form');
     const formSuccess = document.getElementById('form-success');
     const submitBtn = document.querySelector('.submit-btn');
@@ -273,60 +275,9 @@ document.addEventListener('DOMContentLoaded', () => {
     contactForm.addEventListener('submit', (e) => {
         e.preventDefault();
         
-        let isValid = true;
-        
-        // Simple Reset
-        contactForm.querySelectorAll('.form-group').forEach(group => {
-            group.classList.remove('error');
-        });
-        
-        // Validate Name
-        const nameGroup = document.getElementById('name').parentElement;
-        if (!document.getElementById('name').value.trim()) {
-            nameGroup.classList.add('error');
-            isValid = false;
-        }
-
-        // Validate Email
-        const emailInput = document.getElementById('email');
-        const emailGroup = emailInput.parentElement;
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!emailRegex.test(emailInput.value.trim())) {
-            emailGroup.classList.add('error');
-            isValid = false;
-        }
-
-        // Validate Message
-        const msgGroup = document.getElementById('message').parentElement;
-        if (!document.getElementById('message').value.trim()) {
-            msgGroup.classList.add('error');
-            isValid = false;
-        }
-
-        if (isValid) {
-            // Mock Submit state
-            submitBtn.disabled = true;
-            btnText.style.display = 'none';
-            loader.style.display = 'block';
-
-            // Simulate network request
-            setTimeout(() => {
-                submitBtn.disabled = false;
-                btnText.style.display = 'inline';
-                loader.style.display = 'none';
-                
-                // Show Success
-                contactForm.reset();
-                formSuccess.style.display = 'block';
-                
-                // Hide success message after 5 seconds
-                setTimeout(() => {
-                    formSuccess.style.display = 'none';
-                }, 5000);
-                
-            }, 1500);
-        }
+        // ... (removed obsolete form validation)
     });
+    */
 
     // --- Number Counter Animation ---
     const numberElements = document.querySelectorAll('.highlight-number, .stat-number');
@@ -416,6 +367,36 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         
         numberObserver.observe(el);
+    });
+
+    // --- Anti-Scraping & Inspect Element Deterrents ---
+    // Disable Right Click
+    document.addEventListener('contextmenu', (e) => {
+        e.preventDefault();
+    });
+
+    // Disable Common Developer Tools Keyboard Shortcuts
+    document.addEventListener('keydown', (e) => {
+        // Prevent F12
+        if (e.key === 'F12' || e.keyCode === 123) {
+            e.preventDefault();
+            return false;
+        }
+        // Prevent Ctrl+Shift+I (Elements) and Ctrl+Shift+J (Console) and Ctrl+Shift+C (Inspect)
+        if (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J' || e.key === 'C')) {
+            e.preventDefault();
+            return false;
+        }
+        // Prevent Ctrl+U (View Source)
+        if (e.ctrlKey && (e.key === 'u' || e.key === 'U')) {
+            e.preventDefault();
+            return false;
+        }
+        // Prevent Cmd+Option+I for Mac
+        if (e.metaKey && e.altKey && (e.key === 'i' || e.key === 'I')) {
+            e.preventDefault();
+            return false;
+        }
     });
 
 });

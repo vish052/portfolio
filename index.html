@@ -31,9 +31,21 @@
         href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>">
 
     <link rel="stylesheet" href="styles.css">
+
+    <!-- Anti-Scraping Styles -->
+    <style>
+        body {
+            -webkit-user-select: none;
+            /* Safari */
+            -ms-user-select: none;
+            /* IE 10+ */
+            user-select: none;
+            /* Standard syntax */
+        }
+    </style>
 </head>
 
-<body>
+<body ondragstart="return false">
 
     <!-- Skip Navigation for Accessibility -->
     <a href="#main-content" class="skip-nav">Skip to content</a>
