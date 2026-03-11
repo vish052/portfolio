@@ -1628,3 +1628,205 @@ textarea:focus {
         opacity: 1;
     }
 }
+
+/* --- Cursor-Following Mascot --- */
+.pet-mascot {
+    position: fixed;
+    bottom: 2rem;
+    right: 5rem;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: var(--font-body);
+    user-select: none;
+}
+
+.pet-bubble {
+    background-color: var(--card);
+    color: var(--text);
+    padding: 0.5rem 1rem;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--primary);
+    box-shadow: var(--glass-shadow);
+    font-size: 0.8rem;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(10px);
+    transition: all 0.3s ease;
+    text-align: center;
+    white-space: nowrap;
+}
+
+.pet-bubble.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.pet-body {
+    width: 60px;
+    height: 60px;
+    background-color: var(--primary);
+    border-radius: 50% 50% 40% 40%;
+    position: relative;
+    box-shadow: 0 4px 15px rgba(10, 25, 47, 0.4);
+    animation: float 3s ease-in-out infinite;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.pet-body:hover {
+    transform: scale(1.1);
+}
+
+.pet-eye {
+    width: 14px;
+    height: 18px;
+    background-color: white;
+    border-radius: 50%;
+    position: absolute;
+    top: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    animation: blink 5s infinite;
+}
+
+.left-eye {
+    left: 12px;
+}
+
+.right-eye {
+    right: 12px;
+}
+
+.pet-pupil {
+    width: 6px;
+    height: 6px;
+    background-color: #0a192f;
+    border-radius: 50%;
+    position: absolute;
+    transition: transform 0.1s ease-out, background-color 0.3s ease, border-radius 0.3s ease;
+}
+
+/* Heart Eyes State */
+.pet-mascot.loved .pet-pupil {
+    background-color: #ef4444;
+    /* red heart color */
+    border-radius: 0;
+    clip-path: path('M3 0C1.34 0 0 1.34 0 3c0 3.28 2.65 6.09 5.65 8.79C5.85 11.97 5.92 12 6 12s.15-.03.35-.21C9.35 9.09 12 6.28 12 3c0-1.66-1.34-3-3-3-1.07 0-2.05.57-2.6 1.44A3.172 3.172 0 0 0 6 0z');
+    width: 12px;
+    height: 12px;
+}
+
+.pet-mouth {
+    width: 12px;
+    height: 6px;
+    border-bottom: 3px solid #0a192f;
+    border-radius: 0 0 10px 10px;
+    position: absolute;
+    bottom: 15px;
+    left: 50%;
+    transform: translateX(-50%);
+    transition: all 0.2s;
+}
+
+.pet-mascot.excited .pet-mouth {
+    height: 12px;
+    background-color: #0a192f;
+    border-radius: 0 0 10px 10px;
+    border: none;
+}
+
+/* Wiggling State */
+.pet-mascot.wiggling .pet-body {
+    animation: float 3s ease-in-out infinite, wiggle 0.4s ease-in-out infinite;
+}
+
+/* Squished State (for clicking) */
+.pet-mascot.squished .pet-body {
+    transform: scale(1.2, 0.8) translateY(10px);
+}
+
+@keyframes float {
+    0% {
+        transform: translateY(0px);
+    }
+
+    50% {
+        transform: translateY(-10px);
+    }
+
+    100% {
+        transform: translateY(0px);
+    }
+}
+
+@keyframes blink {
+
+    0%,
+    96%,
+    98% {
+        transform: scaleY(1);
+    }
+
+    97%,
+    99% {
+        transform: scaleY(0.1);
+    }
+
+    100% {
+        transform: scaleY(1);
+    }
+}
+
+@keyframes wiggle {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    25% {
+        transform: rotate(-10deg);
+    }
+
+    50% {
+        transform: rotate(0deg);
+    }
+
+    75% {
+        transform: rotate(10deg);
+    }
+
+    100% {
+        transform: rotate(0deg);
+    }
+}
+
+/* --- Mascot Responsiveness --- */
+@media (max-width: 768px) {
+    .pet-mascot {
+        right: 2rem;
+        bottom: 1rem;
+        transform: scale(0.85);
+        transform-origin: bottom right;
+    }
+}
+
+@media (max-width: 480px) {
+    .pet-mascot {
+        right: 1rem;
+        bottom: 1rem;
+        transform: scale(0.7);
+        transform-origin: bottom right;
+    }
+
+    .pet-bubble {
+        font-size: 0.9rem;
+        /* Slightly larger text on small screens relative to scaled mascot */
+        padding: 0.6rem 1.2rem;
+    }
+}

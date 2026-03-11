@@ -36,9 +36,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- Greeting Alert ---
     const showGreeting = () => {
-        // Check if we've already warmly greeted the user this session
-        if (!sessionStorage.getItem('hasSeenGreeting')) {
-            // Create a custom styled overlay alert instead of generic window.alert()
+        // Changed key so it shows up again for the user
+        if (!sessionStorage.getItem('hasSeenGreetingV2')) {
             const overlay = document.createElement('div');
             overlay.className = 'greeting-overlay';
             overlay.innerHTML = `
@@ -54,11 +53,19 @@ document.addEventListener('DOMContentLoaded', () => {
             const closeBtn = document.getElementById('close-greeting');
             closeBtn.addEventListener('click', () => {
                 overlay.classList.add('fade-out');
-                setTimeout(() => overlay.remove(), 400); // Wait for fade transition
+                setTimeout(() => {
+                    overlay.remove();
+                    // Trigger custom event so Mascot knows to start
+                    window.dispatchEvent(new Event('welcomeModalClosed'));
+                }, 400); // Wait for fade transition
             });
 
-            // Prevent showing again in this session
-            sessionStorage.setItem('hasSeenGreeting', 'true');
+            sessionStorage.setItem('hasSeenGreetingV2', 'true');
+        } else {
+            // Already seen, start Mascot immediately
+            setTimeout(() => {
+                window.dispatchEvent(new Event('welcomeModalClosed'));
+            }, 500);
         }
     };
 
@@ -398,5 +405,295 @@ document.addEventListener('DOMContentLoaded', () => {
             return false;
         }
     });
+
+    // --- PRO Cursor-Following Mascot Logic ---
+    const petMascot = document.getElementById('pet-mascot');
+    const pupils = document.querySelectorAll('.pet-pupil');
+    const petBubble = document.getElementById('pet-bubble');
+    const petBody = document.querySelector('.pet-body');
+
+    if (petMascot && pupils.length > 0) {
+        
+        let bubbleTimeoutId = null;
+        let sleepTimeoutId = null;
+        let isSleeping = false;
+
+        // Custom Greeting on Load based on time, waiting for Modal if first visit
+        window.addEventListener('welcomeModalClosed', () => {
+            const hour = new Date().getHours();
+            let greeting = "Hello there! Welcome to my boss's portfolio! 👋";
+            if (hour < 12) greeting = "Good morning! Welcome to my boss's portfolio! ☀️";
+            else if (hour < 18) greeting = "Good afternoon! Welcome to my boss's portfolio! 🚀";
+            else greeting = "Good evening! Welcome to my boss's portfolio! 🌙";
+            
+            showBubble(greeting, 4000);
+            
+            // Second greeting for new landers
+            setTimeout(() => {
+                if (!isPlayingGame && !isSleeping) {
+                    showBubble("Hover over my favorite projects! 🚀", 4000, "loved");
+                }
+            }, 4500);
+
+            resetSleepTimer();
+        });
+
+        // Core visual update function for eyes
+        const updateEyes = (e) => {
+            if (isSleeping) return; // Don't move eyes if sleeping
+
+            pupils.forEach((pupil) => {
+                const eye = pupil.parentElement;
+                const rect = eye.getBoundingClientRect();
+                
+                // Calculate eye center
+                const eyeCenterX = rect.left + rect.width / 2;
+                const eyeCenterY = rect.top + rect.height / 2;
+                
+                // Calculate angle from eye to cursor
+                const angle = Math.atan2(e.clientY - eyeCenterY, e.clientX - eyeCenterX);
+                
+                // Calculate max distance pupil can move within the eye
+                const maxMove = (rect.width - pupil.offsetWidth) / 2;
+                
+                const pupilX = Math.cos(angle) * maxMove;
+                const pupilY = Math.sin(angle) * maxMove;
+                
+                pupil.style.transform = `translate(${pupilX}px, ${pupilY}px)`;
+            });
+        };
+
+        // Sleep Logic
+        const wakeUp = (e) => {
+            if (isSleeping) {
+                isSleeping = false;
+                petBubble.classList.remove('show'); // Hide Zzz
+                
+                // Open eyes
+                document.querySelectorAll('.pet-eye').forEach(eye => {
+                    eye.style.height = '18px';
+                    eye.style.borderTop = 'none';
+                });
+                
+                showBubble("Whoa, I'm awake! 👀", 2000);
+            }
+            updateEyes(e);
+            resetSleepTimer();
+        };
+
+        const goToSleep = () => {
+            isSleeping = true;
+            // Close eyes via CSS
+            document.querySelectorAll('.pet-eye').forEach(eye => {
+                eye.style.height = '4px';
+                eye.style.borderTop = '2px solid #0a192f';
+            });
+            // Center pupils
+            pupils.forEach(pupil => {
+                pupil.style.transform = `translate(0px, 0px)`;
+            });
+            
+            showBubble("Zzz... 😴", 999999); // Stay asleep until move
+        };
+
+        const resetSleepTimer = () => {
+            clearTimeout(sleepTimeoutId);
+            sleepTimeoutId = setTimeout(goToSleep, 10000); // Sleep after 15 seconds of inactivity
+        };
+
+        // Track Mouse
+        document.addEventListener('mousemove', wakeUp);
+
+        // Speech Bubble UI logic
+        const showBubble = (text, duration = 3000, extraClass = null) => {
+            petBubble.innerHTML = text; // allow HTML like emojis
+            petBubble.classList.add('show');
+            petMascot.classList.add('excited');
+            if (extraClass) petMascot.classList.add(extraClass);
+            
+            clearTimeout(bubbleTimeoutId);
+            bubbleTimeoutId = setTimeout(() => {
+                petBubble.classList.remove('show');
+                petMascot.classList.remove('excited');
+                if (extraClass) petMascot.classList.remove(extraClass);
+            }, duration); 
+        };
+
+        // Interactions based on clicks
+        let clickCount = 0;
+        let isPlayingGame = false;
+        let gameInterval = null;
+        let gameIdleTimeout = null;
+
+        const stopGame = (message, win) => {
+            isPlayingGame = false;
+            clearInterval(gameInterval);
+            clearTimeout(gameIdleTimeout);
+            petMascot.style.position = 'fixed';
+            petMascot.style.left = 'auto';
+            petMascot.style.top = 'auto';
+            petMascot.style.bottom = '2rem';
+            petMascot.style.right = '5rem';
+            petMascot.style.transform = 'none';
+            showBubble(message, 4000, win ? "loved" : null);
+            clickCount = 0;
+        };
+
+        const resetGameIdleTimer = () => {
+            if(!isPlayingGame) return;
+            clearTimeout(gameIdleTimeout);
+            gameIdleTimeout = setTimeout(() => {
+                stopGame("Boring... I'm going back. 🥱", false);
+            }, 5000); // 5 seconds of idle stops the game
+        };
+
+        petBody.addEventListener('click', (e) => {
+            if (isPlayingGame) {
+                // Game logic
+                clickCount++;
+                resetGameIdleTimer();
+                if (clickCount >= 5) {
+                    stopGame("You caught me! You win! 🏆", true);
+                } else {
+                    showBubble(`Ouch! ${5 - clickCount} left! 🏃‍♂️`, 1000, "wiggling");
+                }
+                return;
+            }
+
+            showBubble("Thanks for the pet! ❤️", 2000, "loved");
+            
+            // Add squished animation
+            petMascot.classList.add('squished');
+            setTimeout(() => {
+                petMascot.classList.remove('squished');
+                // Do a little spin after squishing
+                petBody.style.transform = "rotate(360deg) scale(1.1)";
+                setTimeout(() => {
+                    petBody.style.transform = "none";
+                }, 500);
+            }, 200);
+        });
+
+        // Secret Mini Game trigger
+        petBody.addEventListener('dblclick', () => {
+            if (isPlayingGame) return;
+            
+            isPlayingGame = true;
+            clickCount = 0;
+            showBubble("Catch me if you can! 🎮", 2000, "wiggling");
+            resetGameIdleTimer();
+            
+            // Start jumping around
+            gameInterval = setInterval(() => {
+                const maxX = window.innerWidth - 100;
+                const maxY = window.innerHeight - 100;
+                
+                const randomX = Math.floor(Math.random() * maxX);
+                const randomY = Math.floor(Math.random() * maxY);
+                
+                petMascot.style.bottom = 'auto';
+                petMascot.style.right = 'auto';
+                petMascot.style.left = `${randomX}px`;
+                petMascot.style.top = `${randomY}px`;
+                
+            }, 700); // Jumps every 700ms
+        });
+
+        document.addEventListener('mousemove', () => {
+             resetGameIdleTimer();
+        });
+
+        // Advanced Context Awareness (Event Delegation)
+        document.body.addEventListener('mouseover', (e) => {
+            const target = e.target;
+            
+            // Skill Chips
+            if (target.classList.contains('skill-chip')) {
+                showBubble(`Ooh, I love ${target.innerText}! 🧠`, 2000, "loved");
+            } 
+            // Contact Buttons
+            else if (target.closest('a[href^="mailto:"]')) {
+                showBubble("Sending an email to the boss? ✉️", 3000, "wiggling");
+            } else if (target.closest('a[href*="wa.me"]')) {
+                showBubble("Say hello on WhatsApp! 💬", 3000, "wiggling");
+            } else if (target.closest('a[href*="linkedin.com"]')) {
+                showBubble("Let's connect on LinkedIn! 🤝", 3000, "wiggling");
+            } 
+            // Project Cards
+            else if (target.closest('.featured-projects-card')) {
+                showBubble("Wow! One of my flagship AI Agents! 🚀", 3000, "loved");
+            } else if (target.closest('.project-card.regular')) {
+                showBubble("Great project! Check the impact metrics! 📊", 3000, "wiggling");
+            }
+            // Nav Links
+            else if (target.closest('.nav-link')) {
+                const href = target.closest('.nav-link').getAttribute('href');
+                switch(href) {
+                    case '#about':
+                        showBubble("Let me tell you about my boss! 👋", 3000, "loved");
+                        break;
+                    case '#skills':
+                        showBubble("Check out his massive tech stack! 💻", 3000, "loved");
+                        break;
+                    case '#experience':
+                        showBubble("Years of solid engineering right here! 🏢", 3000, "wiggling");
+                        break;
+                    case '#projects':
+                        showBubble("Ooh, look at these cool projects! 🚀", 3000, "loved");
+                        break;
+                    case '#education':
+                        showBubble("Smart and certified! 🎓", 3000, "wiggling");
+                        break;
+                    case '#achievements':
+                        showBubble("10+ Deploys, 2M+ Lines, 5K+ Coffees! ☕", 4000, "loved");
+                        break;
+                    case '#contact':
+                        showBubble("Let's get in touch! 📞", 3000, "wiggling");
+                        break;
+                }
+            } else if (target.closest('.about-highlights')) {
+                showBubble("Look at all that experience! 🌟", 3000, "loved");
+            } else if (target.closest('.about-image-placeholder')) {
+                showBubble("That's my creator! 👋", 3000, "loved");
+            }
+        });
+
+        document.body.addEventListener('mouseout', (e) => {
+            const target = e.target;
+            
+            // If we leave any of the trigger elements, clear the animations immediately.
+            if (
+                target.classList.contains('skill-chip') ||
+                target.closest('a[href^="mailto:"]') ||
+                target.closest('a[href*="wa.me"]') ||
+                target.closest('a[href*="linkedin.com"]') ||
+                target.closest('.featured-projects-card') ||
+                target.closest('.project-card.regular') ||
+                target.closest('.nav-link') ||
+                target.closest('.about-highlights') ||
+                target.closest('.about-image-placeholder')
+            ) {
+                 petMascot.classList.remove('loved');
+                 petMascot.classList.remove('wiggling');
+            }
+        });
+        
+        // Scroll Awareness
+        let scrollTimeout;
+        window.addEventListener('scroll', () => {
+             // Wake up on scroll too
+             if(isSleeping) {
+                 wakeUp({clientX: window.innerWidth/2, clientY: window.innerHeight/2});
+             } else {
+                 resetSleepTimer();
+             }
+             
+             // Check if scrolling fast
+             clearTimeout(scrollTimeout);
+             scrollTimeout = setTimeout(() => {
+                 // Stopped scrolling
+             }, 150);
+        });
+    }
 
 });
